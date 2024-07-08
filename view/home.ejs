@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link rel="stylesheet" href="<%- locals.urlcss%>/css/output.css" />
+  </head>
+  <body>
+    <h1 class="text-center text-4xl font-bold p-3 m-2">URL Shortner</h1>
+    <form method="POST" action="/url" class="text-center">
+      <label class="font-medium">Enter Your URL: </label>
+      <input
+        type="text"
+        name="url"
+        class="rounded-md border p-2 mx-4 my-5"
+        placeholder="https://example.com"
+      />
+      <button class="border p-2 rounded-md font-bold" type="submit">
+        Generate
+      </button>
+    </form>
+
+    <% if (locals.id) { %>
+    <p class="text-center text-2xl font-light">
+      URL Generated:
+      <span class="italic text-blue-500"
+        >http://localhost:8001/<%=locals.id%></span
+      >
+    </p>
+    <% } %>
+
+    <div class="p-6">
+      <% if (locals.urls) { %>
+      <h2 class="font-normal text-center text-2xl">
+        Links History of (<span class=""><%= locals.name %></span>)
+      </h2>
+      <div class="m-5 items-center">
+        <table class="text-center">
+          <thead class="border">
+            <th class="border p-3">Sr. No.</th>
+            <th class="border">Short ID</th>
+            <th class="border">Redirect URL</th>
+            <th class="border">Total Clicks</th>
+          </thead>
+          <tbody>
+            <% urls.forEach((url,index) => { %>
+            <tr>
+              <td class="border"><%= index+1 %></td>
+              <td class="border italic text-blue-500 p-3">
+                http://localhost:8001/<%= url.shortId %>
+              </td>
+              <td class="border"><%= url.redirectUrl %></td>
+              <td class="border"><%= url.visitHistory.length %></td>
+            </tr>
+            <% }) %> <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
